@@ -56,18 +56,30 @@ export default function AppFunctional(props) {
     // ***DONE***
   }
 
-  function getNextIndex(direction) {
-    // console.log("Message Displayed");
-    // const nextokX = () => {
-    //   if (index > 3) {
-    //     return;
-    //   }
-    // };
-    const nextY = () => {
-      if (index >= 0 && index <= 2) {
-        return direction;
+  function getNextIndex() {
+    let upDownDirection = index;
+    switch (upDownDirection) {
+      case 1: {
+        index - 3;
+        break;
       }
-    };
+      case 2: {
+        index + 3;
+        break;
+      }
+    }
+
+    let leftRightDirection = index;
+    switch (leftRightDirection) {
+      case 1: {
+        index - 1;
+        break;
+      }
+      case 2: {
+        index + 1;
+      }
+    }
+
     // This helper takes a direction ("left", "up", etc) and calculates what the next index
     // of the "B" would be. If the move is impossible because we are at the edge of the grid,
     // this helper should return the current index unchanged.
@@ -103,7 +115,7 @@ export default function AppFunctional(props) {
         ))}
       </div>
       <div className="info">
-        <h3 id="message">{getNextIndex()}</h3>
+        <h3 id="message"></h3>
       </div>
       <div id="keypad">
         <button id="left">LEFT</button>
