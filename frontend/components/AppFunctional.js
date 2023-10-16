@@ -57,28 +57,36 @@ export default function AppFunctional(props) {
   }
 
   function getNextIndex() {
-    let upDownDirection = index;
-    switch (upDownDirection) {
-      case 1: {
+    let direction = index;
+    switch (direction) {
+      case "up": {
         index - 3;
         break;
       }
-      case 2: {
+      case "down": {
         index + 3;
+        break;
+      }
+      case "left": {
+        index + 1;
+        break;
+      }
+      case "right": {
+        index - 1;
         break;
       }
     }
 
-    let leftRightDirection = index;
-    switch (leftRightDirection) {
-      case 1: {
-        index - 1;
-        break;
-      }
-      case 2: {
-        index + 1;
-      }
-    }
+    // let leftRightDirection = index;
+    // switch (leftRightDirection) {
+    //   case 1: {
+    //     index - 1;
+    //     break;
+    //   }
+    //   case 2: {
+    //     index + 1;
+    //   }
+    // }
 
     // This helper takes a direction ("left", "up", etc) and calculates what the next index
     // of the "B" would be. If the move is impossible because we are at the edge of the grid,
