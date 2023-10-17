@@ -88,7 +88,7 @@ export default function AppFunctional(props) {
         break;
       }
     }
-
+    console.log(getNextIndex);
     // This helper takes a direction ("left", "up", etc) and calculates what the next index
     // of the "B" would be. If the move is impossible because we are at the edge of the grid,
     // this helper should return the current index unchanged.
@@ -127,7 +127,9 @@ export default function AppFunctional(props) {
         <h3 id="message"></h3>
       </div>
       <div id="keypad">
-        <button id="left">LEFT</button>
+        <button id="left" onClick={() => getNextIndex("left")}>
+          LEFT
+        </button>
         <button id="up">UP</button>
         <button id="right">RIGHT</button>
         <button id="down">DOWN</button>
