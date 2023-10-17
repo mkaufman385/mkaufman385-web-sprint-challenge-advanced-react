@@ -10,6 +10,9 @@ const initialIndex = 4; // the index the "B" is at
 
 export default function AppFunctional(props) {
   const [index, setIndex] = useState(initialIndex);
+  const [steps, setSteps] = useState(initialSteps);
+  const [message, setMessage] = useState(initialMessage);
+  const [email, setEmail] = useState(initialEmail);
 
   function getXY() {
     const xCoord = () => {
@@ -49,44 +52,42 @@ export default function AppFunctional(props) {
   // }
 
   function reset() {
-    setIndex(4);
-    console.log("index reset back to 4");
+    setIndex(initialIndex);
+    setSteps(initialSteps);
+    setMessage(initialMessage);
+    setEmail(initialEmail);
+    console.log(
+      "reset back to index 4, steps 0, message empty, and email input empty"
+    );
 
     // Use this helper to reset all states to their initial values.
     // ***DONE***
   }
 
-  function getNextIndex() {
-    let direction = index;
+  function getNextIndex(direction) {
+    // let newDirection = index;
     switch (direction) {
       case "up": {
-        index - 3;
+        setIndex(index - 3);
+        setSteps(steps + 1);
         break;
       }
       case "down": {
-        index + 3;
+        setIndex(index + 3);
+        setSteps(steps + 1);
         break;
       }
       case "left": {
-        index + 1;
+        setIndex(index - 1);
+        setSteps(steps + 1);
         break;
       }
       case "right": {
-        index - 1;
+        setIndex(index + 1);
+        setSteps(steps + 1);
         break;
       }
     }
-
-    // let leftRightDirection = index;
-    // switch (leftRightDirection) {
-    //   case 1: {
-    //     index - 1;
-    //     break;
-    //   }
-    //   case 2: {
-    //     index + 1;
-    //   }
-    // }
 
     // This helper takes a direction ("left", "up", etc) and calculates what the next index
     // of the "B" would be. If the move is impossible because we are at the edge of the grid,
