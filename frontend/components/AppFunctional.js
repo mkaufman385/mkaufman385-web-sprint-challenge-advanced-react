@@ -65,7 +65,6 @@ export default function AppFunctional(props) {
   }
 
   function getNextIndex(direction) {
-    // let newDirection = index;
     switch (direction) {
       case "up": {
         setIndex(index - 3);
@@ -88,12 +87,17 @@ export default function AppFunctional(props) {
         break;
       }
     }
-    console.log(getNextIndex);
+
     // This helper takes a direction ("left", "up", etc) and calculates what the next index
     // of the "B" would be. If the move is impossible because we are at the edge of the grid,
     // this helper should return the current index unchanged.
     //
   }
+
+  // function stepCounter() {
+  //   let counter = initialSteps;
+  //   setSteps(counter + 1);
+  // }
 
   function move(e) {
     // setIndex(e.target.id);
@@ -114,12 +118,12 @@ export default function AppFunctional(props) {
       <div className="info">
         <h3 id="coordinates">Coordinates {getXY()}</h3>
         <h3 id="coordinates">Index {index}</h3>
-        <h3 id="steps">You moved 0 times</h3>
+        <h3 id="steps">You moved {steps} times</h3>
       </div>
       <div id="grid">
         {[0, 1, 2, 3, 4, 5, 6, 7, 8].map((idx) => (
-          <div key={idx} className={`square${idx === 4 ? " active" : ""}`}>
-            {idx === 4 ? "B" : null}
+          <div key={idx} className={`square${idx === index ? " active" : ""}`}>
+            {idx === index ? "B" : null}
           </div>
         ))}
       </div>
@@ -130,9 +134,15 @@ export default function AppFunctional(props) {
         <button id="left" onClick={() => getNextIndex("left")}>
           LEFT
         </button>
-        <button id="up">UP</button>
-        <button id="right">RIGHT</button>
-        <button id="down">DOWN</button>
+        <button id="up" onClick={() => getNextIndex("up")}>
+          UP
+        </button>
+        <button id="right" onClick={() => getNextIndex("right")}>
+          RIGHT
+        </button>
+        <button id="down" onClick={() => getNextIndex("down")}>
+          DOWN
+        </button>
         <button id="reset" onClick={() => reset()}>
           reset
         </button>
