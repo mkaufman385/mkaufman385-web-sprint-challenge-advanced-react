@@ -94,12 +94,24 @@ export default function AppFunctional(props) {
     //
   }
 
-  // function stepCounter() {
-  //   let counter = initialSteps;
-  //   setSteps(counter + 1);
-  // }
+  function move(e, callback) {
 
-  function move(e) {
+    const boundaries = () => {
+      if (index >= 0 && index <= 2) {
+        setMessage(initialMessage);
+      } else {
+        return "You can't go up";
+      }
+      
+    // move(getNextIndex())
+    
+    // if (index >= 3 && index <= 5) {
+    //   return 2;
+    // }
+    // if (index >= 6 && index <= 8) {
+    //   return 3;
+    // }
+    
     // setIndex(e.target.id);
     // This event handler can use the helper above to obtain a new index for the "B",
     // and change any states accordingly.
