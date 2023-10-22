@@ -94,24 +94,30 @@ export default function AppFunctional(props) {
     //
   }
 
-  function move(e, callback) {
-
+  function move(direction) {
     const boundaries = () => {
-      if (index >= 0 && index <= 2) {
-        setMessage(initialMessage);
+      if (direction === "up") {
+        return getXY();
       } else {
-        return "You can't go up";
+        setMessage("You can't go up");
       }
-      
+
+      // if (index >= 0 && index <= 2) {
+      //   setMessage(initialMessage);
+      // } else {
+      //   return "You can't go up";
+      // }
+    };
+
     // move(getNextIndex())
-    
+
     // if (index >= 3 && index <= 5) {
     //   return 2;
     // }
     // if (index >= 6 && index <= 8) {
     //   return 3;
     // }
-    
+
     // setIndex(e.target.id);
     // This event handler can use the helper above to obtain a new index for the "B",
     // and change any states accordingly.
@@ -140,7 +146,7 @@ export default function AppFunctional(props) {
         ))}
       </div>
       <div className="info">
-        <h3 id="message"></h3>
+        <h3 id="message">{move()}</h3>
       </div>
       <div id="keypad">
         <button id="left" onClick={() => getNextIndex("left")}>
