@@ -82,7 +82,9 @@ export default function AppFunctional(props) {
       }
 
       case "left": {
-        if ((index % 3) - 1 === 0 && (index % 3) - 2 === 0) {
+        if ((index % 3) - 1 === 0) {
+          return index - 1;
+        } else if ((index % 3) - 2 === 0) {
           return index - 1;
         } else {
           return index;
@@ -90,7 +92,9 @@ export default function AppFunctional(props) {
         break;
       }
       case "right": {
-        if ((index % 3) - 1 === 0 && index % 3 === 0) {
+        if (index % 3 === 0) {
+          return index + 1;
+        } else if ((index % 3) - 1 === 0) {
           return index + 1;
         } else {
           return index;
@@ -166,6 +170,7 @@ export default function AppFunctional(props) {
   }
 
   function onChange(evt) {
+    setEmail(evt.target.value);
     // You will need this to update the value of the input.
   }
 
@@ -208,7 +213,13 @@ export default function AppFunctional(props) {
         </button>
       </div>
       <form>
-        <input id="email" type="email" placeholder="type email"></input>
+        <input
+          onChange={onChange}
+          id="email"
+          value={email}
+          type="email"
+          placeholder="type email"
+        ></input>
         <input id="submit" type="submit"></input>
       </form>
     </div>
