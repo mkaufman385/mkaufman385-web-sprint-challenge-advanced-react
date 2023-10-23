@@ -63,30 +63,37 @@ export default function AppFunctional(props) {
   }
 
   function getNextIndex(direction) {
-    const xyCoordinate = getXY();
-
     switch (direction) {
       case "up": {
-        if (direction === "up") {
-          return xyCoordinate;
+        if (index <= 8 && index >= 3) {
+          return index - 3;
+        } else {
+          return index;
         }
         break;
       }
       case "down": {
-        if (direction === "down") {
-          return xyCoordinate;
+        if (index <= 5 && index >= 0) {
+          return index + 3;
+        } else {
+          return index;
         }
         break;
       }
+
       case "left": {
-        if (direction === "left") {
-          return xyCoordinate;
+        if ((index % 3) - 1 === 0 && (index % 3) - 2 === 0) {
+          return index - 1;
+        } else {
+          return index;
         }
         break;
       }
       case "right": {
-        if (direction === "right") {
-          return xyCoordinate;
+        if ((index % 3) - 1 === 0 && index % 3 === 0) {
+          return index + 1;
+        } else {
+          return index;
         }
         break;
       }
@@ -99,44 +106,44 @@ export default function AppFunctional(props) {
   }
 
   function move(direction) {
-    const newIndex = getNextIndex();
+    const newIndex = getNextIndex(direction);
 
     switch (direction) {
       case "up": {
-        setIndex(index - 3);
-        setSteps(steps + 1);
-        // if(){
-        // setIndex(index - 3);
-        // setSteps(steps + 1);
-        // } else{
-
-        //   setSteps(steps)
-        //   setMessage("You can't go up")
-        // }
-        // if (direction === "up") {
-        //   setIndex(index - 3);
-        //   setSteps(steps + 1);
-        // } else if (index < 0 && index > 8) {
-        //   setIndex(index);
-        //   setSteps(steps);
-        //   setMessage("You can't go up");
-        // }
+        if (newIndex != index) {
+          setIndex(newIndex);
+          setSteps(steps + 1);
+        } else {
+          setMessage("You can't go up");
+        }
 
         break;
       }
       case "down": {
-        setIndex(index + 3);
-        setSteps(steps + 1);
+        if (newIndex != index) {
+          setIndex(newIndex);
+          setSteps(steps + 1);
+        } else {
+          setMessage("You can't go down");
+        }
         break;
       }
       case "left": {
-        setIndex(index - 1);
-        setSteps(steps + 1);
+        if (newIndex != index) {
+          setIndex(newIndex);
+          setSteps(steps + 1);
+        } else {
+          setMessage("You can't go left");
+        }
         break;
       }
       case "right": {
-        setIndex(index + 1);
-        setSteps(steps + 1);
+        if (newIndex != index) {
+          setIndex(newIndex);
+          setSteps(steps + 1);
+        } else {
+          setMessage("You can't go right");
+        }
         break;
       }
     }
@@ -181,7 +188,7 @@ export default function AppFunctional(props) {
         ))}
       </div>
       <div className="info">
-        <h3 id="message">{getNextIndex()}</h3>
+        <h3 id="message">{message}</h3>
       </div>
       <div id="keypad">
         <button id="left" onClick={() => move("left")}>
