@@ -41,7 +41,6 @@ export default function AppFunctional(props) {
     return `(${xCoord()}, ${yCoord()})`;
     // It it not necessary to have a state to track the coordinates.
     // It's enough to know what index the "B" is at, to be able to calculate them.
-    // ***DONE***
   }
   getXY();
 
@@ -61,14 +60,68 @@ export default function AppFunctional(props) {
     );
 
     // Use this helper to reset all states to their initial values.
-    // ***DONE***
   }
 
   function getNextIndex(direction) {
+    const xyCoordinate = getXY();
+
+    switch (direction) {
+      case "up": {
+        if (direction === "up") {
+          return xyCoordinate;
+        }
+        break;
+      }
+      case "down": {
+        if (direction === "down") {
+          return xyCoordinate;
+        }
+        break;
+      }
+      case "left": {
+        if (direction === "left") {
+          return xyCoordinate;
+        }
+        break;
+      }
+      case "right": {
+        if (direction === "right") {
+          return xyCoordinate;
+        }
+        break;
+      }
+    }
+
+    // This helper takes a direction ("left", "up", etc) and calculates what the next index
+    // of the "B" would be. If the move is impossible because we are at the edge of the grid,
+    // this helper should return the current index unchanged.
+    //
+  }
+
+  function move(direction) {
+    const newIndex = getNextIndex();
+
     switch (direction) {
       case "up": {
         setIndex(index - 3);
         setSteps(steps + 1);
+        // if(){
+        // setIndex(index - 3);
+        // setSteps(steps + 1);
+        // } else{
+
+        //   setSteps(steps)
+        //   setMessage("You can't go up")
+        // }
+        // if (direction === "up") {
+        //   setIndex(index - 3);
+        //   setSteps(steps + 1);
+        // } else if (index < 0 && index > 8) {
+        //   setIndex(index);
+        //   setSteps(steps);
+        //   setMessage("You can't go up");
+        // }
+
         break;
       }
       case "down": {
@@ -87,38 +140,20 @@ export default function AppFunctional(props) {
         break;
       }
     }
-
-    // This helper takes a direction ("left", "up", etc) and calculates what the next index
-    // of the "B" would be. If the move is impossible because we are at the edge of the grid,
-    // this helper should return the current index unchanged.
-    //
-  }
-
-  function move(direction) {
-    const boundaries = () => {
-      if (direction === "up") {
-        return getXY();
-      } else {
-        setMessage("You can't go up");
-      }
-
-      // if (index >= 0 && index <= 2) {
-      //   setMessage(initialMessage);
-      // } else {
-      //   return "You can't go up";
-      // }
-    };
-
-    // move(getNextIndex())
-
-    // if (index >= 3 && index <= 5) {
-    //   return 2;
-    // }
-    // if (index >= 6 && index <= 8) {
-    //   return 3;
+    // if (direction === "up") {
+    //   return getNextIndex();
+    // } else {
+    //   setMessage("You can't go up");
+    //   setIndex(index);
+    //   setSteps(steps);
     // }
 
-    // setIndex(e.target.id);
+    // if (index >= 0 && index <= 2) {
+    //   setMessage(initialMessage);
+    // } else {
+    //   return "You can't go up";
+    // }
+
     // This event handler can use the helper above to obtain a new index for the "B",
     // and change any states accordingly.
   }
@@ -146,19 +181,19 @@ export default function AppFunctional(props) {
         ))}
       </div>
       <div className="info">
-        <h3 id="message">{move()}</h3>
+        <h3 id="message">{getNextIndex()}</h3>
       </div>
       <div id="keypad">
-        <button id="left" onClick={() => getNextIndex("left")}>
+        <button id="left" onClick={() => move("left")}>
           LEFT
         </button>
-        <button id="up" onClick={() => getNextIndex("up")}>
+        <button id="up" onClick={() => move("up")}>
           UP
         </button>
-        <button id="right" onClick={() => getNextIndex("right")}>
+        <button id="right" onClick={() => move("right")}>
           RIGHT
         </button>
-        <button id="down" onClick={() => getNextIndex("down")}>
+        <button id="down" onClick={() => move("down")}>
           DOWN
         </button>
         <button id="reset" onClick={() => reset()}>
