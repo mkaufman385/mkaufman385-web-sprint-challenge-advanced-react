@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useState } from "react";
 
 // 0, 1, 2, 3, 4, 5, 6, 7, 8
@@ -171,11 +172,31 @@ export default function AppFunctional(props) {
 
   function onChange(evt) {
     setEmail(evt.target.value);
+    console.log(email);
     // You will need this to update the value of the input.
   }
 
   function onSubmit(evt) {
-    // Use a POST request to send a payload to the server.
+    evt.preventDefault();
+    console.log(evt);
+    // axios.post("http://localhost:9000/api/result", {});
+
+    //   fetch("http://localhost:9000/api/result", {
+    //     method: "POST",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //     body: JSON.stringify({
+    //       name: "user 1 posted",
+    //     }),
+    //   })
+    //     .then((res) => {
+    //       return res.json();
+    //     })
+    //     .then((data) => console.log(data))
+    //     .catch((error) => console.log("ERROR"));
+
+    //   // Use a POST request to send a payload to the server.
   }
 
   return (
@@ -212,9 +233,9 @@ export default function AppFunctional(props) {
           reset
         </button>
       </div>
-      <form>
+      <form onSubmit={(evt) => onSubmit(evt)}>
         <input
-          onChange={onChange}
+          onChange={(evt) => onChange(evt)}
           id="email"
           value={email}
           type="email"
