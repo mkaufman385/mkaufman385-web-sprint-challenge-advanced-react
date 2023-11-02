@@ -178,23 +178,24 @@ export default function AppFunctional(props) {
 
   function onSubmit(evt) {
     evt.preventDefault();
-    console.log(evt);
-    // axios.post("http://localhost:9000/api/result", {});
 
-    //   fetch("http://localhost:9000/api/result", {
-    //     method: "POST",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //     body: JSON.stringify({
-    //       name: "user 1 posted",
-    //     }),
-    //   })
-    //     .then((res) => {
-    //       return res.json();
-    //     })
-    //     .then((data) => console.log(data))
-    //     .catch((error) => console.log("ERROR"));
+    fetch("http://localhost:9000/api/result", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({
+        x: getXY(),
+        y: getXY(),
+        steps: steps,
+        email: email,
+      }),
+    }).then((res) => {
+      res.json().then((resp) => {
+        console.warn("resp", resp);
+      });
+    });
 
     //   // Use a POST request to send a payload to the server.
   }
