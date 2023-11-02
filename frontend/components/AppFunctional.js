@@ -179,6 +179,21 @@ export default function AppFunctional(props) {
   function onSubmit(evt) {
     evt.preventDefault();
 
+    function convertCoordinatesFromStringToNumbers(coordinatesString) {
+      const [xString, yString] = coordinatesString.slice(1, -1).split(",");
+
+      const x = parseFloat(xString);
+      const y = parseFloat(yString);
+
+      return { x, y };
+    }
+
+    const coordinatesString = getXY();
+    const coordinates =
+      convertCoordinatesFromStringToNumbers(coordinatesString);
+    console.log(coordinates.x);
+    console.log(coordinates.y);
+
     fetch("http://localhost:9000/api/result", {
       method: "POST",
       headers: {
@@ -186,8 +201,8 @@ export default function AppFunctional(props) {
         Accept: "application/json",
       },
       body: JSON.stringify({
-        x: getXY(),
-        y: getXY(),
+        x: coordinates.x,
+        y: coordinates.y,
         steps: steps,
         email: email,
       }),
