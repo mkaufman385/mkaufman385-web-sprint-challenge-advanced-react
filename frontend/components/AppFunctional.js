@@ -206,11 +206,15 @@ export default function AppFunctional(props) {
         steps: steps,
         email: email,
       }),
-    }).then((res) => {
-      res.json().then((resp) => {
-        console.warn("resp", resp);
-      });
-    });
+    })
+      .then((resp) => {
+        resp.json();
+        setMessage(resp.message);
+      })
+      .catch((err) => console.log(err));
+    // .finally((res) => {
+    //   console.log(res.message);
+    // });
 
     //   // Use a POST request to send a payload to the server.
   }
