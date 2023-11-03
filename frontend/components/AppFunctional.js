@@ -209,7 +209,8 @@ export default function AppFunctional(props) {
     })
       .then((resp) => {
         resp.json();
-        console.log(resp);
+        // console.log(resp);
+        console.log(resp.data);
       })
       .catch((err) => console.log(err));
     // .finally((res) => {
