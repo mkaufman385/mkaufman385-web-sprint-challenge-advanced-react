@@ -209,7 +209,7 @@ export default function AppFunctional(props) {
     })
       .then((resp) => {
         resp.json();
-        setMessage(resp.message);
+        console.log(resp);
       })
       .catch((err) => console.log(err));
     // .finally((res) => {
