@@ -152,19 +152,6 @@ export default function AppFunctional(props) {
         break;
       }
     }
-    // if (direction === "up") {
-    //   return getNextIndex();
-    // } else {
-    //   setMessage("You can't go up");
-    //   setIndex(index);
-    //   setSteps(steps);
-    // }
-
-    // if (index >= 0 && index <= 2) {
-    //   setMessage(initialMessage);
-    // } else {
-    //   return "You can't go up";
-    // }
 
     // This event handler can use the helper above to obtain a new index for the "B",
     // and change any states accordingly.
@@ -194,31 +181,61 @@ export default function AppFunctional(props) {
     console.log(coordinates.x);
     console.log(coordinates.y);
 
-    fetch("http://localhost:9000/api/result", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-      body: JSON.stringify({
-        x: coordinates.x,
-        y: coordinates.y,
-        steps: steps,
-        email: email,
-      }),
-    })
-      .then((resp) => {
-        resp.json();
-        // console.log(resp);
-        console.log(resp.data);
-      })
-      .catch((err) => console.log(err));
-    // .finally((res) => {
-    //   console.log(res.message);
-    // });
+    axios
+      .post(
+        "http://localhost:9000/api/result",
+        JSON.stringify({
+          x: coordinates.x,
+          y: coordinates.y,
+          steps: steps,
+          email: email,
+        })
+      )
+      .then((response) => console.log(response.data))
+      .catch((error) => console.log("An error occurred:", error));
 
-    //   // Use a POST request to send a payload to the server.
+    // axios.post('http://localhost:9000/api/result', JSON.stringify({
+    //       x: coordinates.x,
+    //       y: coordinates.y,
+    //       steps: steps,
+    //       email: email,
+    //     })), headers: {
+    //           "Content-Type": "application/json"
+
+    //         }
+    //   .then(resp => {
+    //     resp.json();
+    //   })
+    //   .catch(err => {
+    //     // Handle errors here
+    //     console.error('An error occurred:', err);
+    //   });
   }
+
+  // axios("http://localhost:9000/api/result", {
+  //   method: "POST",
+  //   headers: {
+  //     "Content-Type": "application/json",
+  //     Accept: "application/json",
+  //   },
+  //   body: JSON.stringify({
+  //     x: coordinates.x,
+  //     y: coordinates.y,
+  //     steps: steps,
+  //     email: email,
+  //   }),
+  // })
+  //   .then((resp) => {
+  //     resp.json();
+  //     // console.log(resp);
+  //     console.log(resp.data);
+  //   })
+  //   .catch((err) => console.log(err));
+  // // .finally((res) => {
+  // //   console.log(res.message);
+  // // });
+
+  //   // Use a POST request to send a payload to the server.
 
   return (
     <div id="wrapper" className={props.className}>
@@ -254,9 +271,9 @@ export default function AppFunctional(props) {
           reset
         </button>
       </div>
-      <form onSubmit={(evt) => onSubmit(evt)}>
+      <form onSubmit={onSubmit}>
         <input
-          onChange={(evt) => onChange(evt)}
+          onChange={onChange}
           id="email"
           value={email}
           type="email"
