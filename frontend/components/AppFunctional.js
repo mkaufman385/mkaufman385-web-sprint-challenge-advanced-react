@@ -182,17 +182,23 @@ export default function AppFunctional(props) {
     console.log(coordinates.y);
 
     axios
-      .post(
-        "http://localhost:9000/api/result",
-        JSON.stringify({
-          x: coordinates.x,
-          y: coordinates.y,
-          steps: steps,
-          email: email,
-        })
-      )
-      .then((response) => console.log(response.data))
-      .catch((error) => console.log("An error occurred:", error));
+      .post("http://localhost:9000/api/result", {
+        x: coordinates.x,
+        y: coordinates.y,
+        steps: steps,
+        email: email,
+      })
+      .then((response) => setMessage(response.data.message))
+      .catch((error) => {
+        console.log(error.response.data);
+      });
+
+    // .catch((error) => {
+    //   if (email === "") {
+    //     console.error("Error response from server:", error.message);
+    //     setMessage(error.message);
+    //   }
+    // });
 
     // axios.post('http://localhost:9000/api/result', JSON.stringify({
     //       x: coordinates.x,
