@@ -190,8 +190,7 @@ export default function AppFunctional(props) {
       })
       .then((response) => setMessage(response.data.message))
       .catch((error) => {
-        console.log(error.response.data);
-        // setMessage(error.response.data);
+        setMessage(error.response.data.message);
       });
 
     // .catch((error) => {
