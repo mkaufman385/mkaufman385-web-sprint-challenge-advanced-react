@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 // Suggested initial states
 const initialMessage = "";
@@ -22,25 +22,25 @@ export default class AppClass extends React.Component {
 
   getXY = () => {
     const xCoord = () => {
-      if (this.index % 3 === 0) {
+      if (this.state.index % 3 === 0) {
         return 1;
       }
-      if ((this.index % 3) - 1 === 0) {
+      if ((this.state.index % 3) - 1 === 0) {
         return 2;
       }
-      if ((this.index % 3) - 2 === 0) {
+      if ((this.state.index % 3) - 2 === 0) {
         return 3;
       }
     };
 
     const yCoord = () => {
-      if (this.index >= 0 && this.index <= 2) {
+      if (this.state.index >= 0 && this.state.index <= 2) {
         return 1;
       }
-      if (this.index >= 3 && this.index <= 5) {
+      if (this.state.index >= 3 && this.state.index <= 5) {
         return 2;
       }
-      if (this.index >= 6 && this.index <= 8) {
+      if (this.state.index >= 6 && this.state.index <= 8) {
         return 3;
       }
     };
@@ -48,6 +48,8 @@ export default class AppClass extends React.Component {
     // It it not necessary to have a state to track the coordinates.
     // It's enough to know what index the "B" is at, to be able to calculate them.
   };
+  // console.log(this.getXY())
+
   // getXY()
   // It it not necessary to have a state to track the coordinates.
   // It's enough to know what index the "B" is at, to be able to calculate them.
@@ -70,50 +72,92 @@ export default class AppClass extends React.Component {
   };
 
   getNextIndex = (direction) => {
-    // switch (direction) {
-    //   case "up": {
-    //     if (this.index <= 8 && this.index >= 3) {
-    //       return this.index - 3;
-    //     } else {
-    //       return this.index;
-    //     }
-    //     break;
-    //   }
-    //   case "down": {
-    //     if (this.index <= 5 && this.index >= 0) {
-    //       return this.index + 3;
-    //     } else {
-    //       return this.index;
-    //     }
-    //     break;
-    //   }
-    //   case "left": {
-    //     if ((this.index % 3) - 1 === 0) {
-    //       return this.index - 1;
-    //     } else if ((this.index % 3) - 2 === 0) {
-    //       return this.index - 1;
-    //     } else {
-    //       return this.index;
-    //     }
-    //     break;
-    //   }
-    //   case "right": {
-    //     if (this.index % 3 === 0) {
-    //       return this.index + 1;
-    //     } else if ((this.index % 3) - 1 === 0) {
-    //       return this.index + 1;
-    //     } else {
-    //       return this.index;
-    //     }
-    //     break;
-    //   }
-    // }
+    switch (direction) {
+      case "up": {
+        if (this.state.index <= 8 && this.state.index >= 3) {
+          return this.setState({ index: this.state.index - 3 });
+        } else {
+          return this.state.index;
+        }
+        break;
+      }
+      case "down": {
+        if (this.state.index <= 5 && this.state.index >= 0) {
+          return this.setState({ index: this.state.index + 3 });
+        } else {
+          return this.state.index;
+        }
+        break;
+      }
+      case "left": {
+        if ((this.state.index % 3) - 1 === 0) {
+          return this.setState({ index: this.state.index - 1 });
+        } else if ((this.state.index % 3) - 2 === 0) {
+          return this.setState({ index: this.state.index - 1 });
+        } else {
+          return this.state.index;
+        }
+        break;
+      }
+      case "right": {
+        if (this.state.index % 3 === 0) {
+          return this.setState({ index: this.state.index + 1 });
+        } else if ((this.state.index % 3) - 1 === 0) {
+          return this.setState({ index: this.state.index + 1 });
+        } else {
+          return this.state.index;
+        }
+        break;
+      }
+    }
     // This helper takes a direction ("left", "up", etc) and calculates what the next index
     // of the "B" would be. If the move is impossible because we are at the edge of the grid,
     // this helper should return the current index unchanged.
   };
 
   move = (direction) => {
+    const newIndex = getNextIndex(direction);
+
+    switch (direction) {
+      case "up": {
+        if (newIndex != this.state.index) {
+          this.setState({ index: this.state.newIndex });
+          this.setState({ steps: this.state.steps + 1 });
+        } else {
+          this.setState({ message: this.state.message + "You can't go up" });
+        }
+
+        break;
+      }
+      case "down": {
+        if (newIndex != index) {
+          setIndex(newIndex);
+          setSteps(steps + 1);
+        } else {
+          setMessage("You can't go down");
+        }
+        break;
+      }
+      case "left": {
+        if (newIndex != index) {
+          setIndex(newIndex);
+          setSteps(steps + 1);
+        } else {
+          setMessage("You can't go left");
+        }
+        break;
+      }
+      case "right": {
+        if (newIndex != index) {
+          setIndex(newIndex);
+          setSteps(steps + 1);
+        } else {
+          setMessage("You can't go right");
+        }
+        break;
+      }
+    }
+
     // const newIndex = getNextIndex(direction);
     // switch (direction) {
     //   case "up": {
@@ -170,9 +214,9 @@ export default class AppClass extends React.Component {
     return (
       <div id="wrapper" className={className}>
         <div className="info">
-          <h3 id="coordinates">Coordinates (this.getXY())</h3>
+          <h3 id="coordinates">Coordinates {this.getXY()}</h3>
           <h3 id="coordinates">Index {this.state.index}</h3>
-          <h3 id="steps">You moved 0 times</h3>
+          <h3 id="steps">You moved {this.state.steps} times</h3>
         </div>
         <div id="grid">
           {[0, 1, 2, 3, 4, 5, 6, 7, 8].map((idx) => (
@@ -191,7 +235,9 @@ export default class AppClass extends React.Component {
           <button id="left" onClick={() => this.move("left")}>
             LEFT
           </button>
-          <button id="up">UP</button>
+          <button id="up" onClick={() => this.move("up")}>
+            UP
+          </button>
           <button id="right">RIGHT</button>
           <button id="down">DOWN</button>
           <button id="reset" onClick={this.reset}>
