@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, setState } from "react";
 
 // Suggested initial states
 const initialMessage = "";
@@ -61,14 +61,18 @@ export default class AppClass extends React.Component {
   // };
 
   reset = () => {
-    // this.setState({ index: initialIndex });
-    // this.setState({ steps: initialSteps });
-    // this.setState({ message: initialMessage });
-    // this.setState({ email: initialEmail });
+    // this.setState({ index: this.state.initialIndex });
+    // // setIndex(initialIndex);
+    // this.setState({ steps: this.state.initialSteps });
+    // // setSteps(initialSteps);
+    // this.setState({ message: this.state.initialMessage });
+    // // setMessage(initialMessage);
+    // this.setState({ email: this.state.initialEmail });
+    // // setEmail(initialEmail);
     // console.log(
     //   "reset back to index 4, steps 0, message empty, and email input empty"
     // );
-    // Use this helper to reset all states to their initial values.
+    // // Use this helper to reset all states to their initial values.
   };
 
   getNextIndex = (direction) => {
@@ -121,7 +125,7 @@ export default class AppClass extends React.Component {
     switch (direction) {
       case "up": {
         if (newIndex != this.index) {
-          this.setState({ index: this.state.newIndex });
+          this.setState({ index: newIndex });
           this.setState({ steps: this.state.steps + 1 });
         } else {
           this.setState({ message: this.state.message + "You can't go up" });
@@ -131,7 +135,7 @@ export default class AppClass extends React.Component {
       }
       case "down": {
         if (newIndex != this.index) {
-          this.setState({ index: this.state.newIndex });
+          this.setState({ index: newIndex });
           this.setState({ steps: this.state.steps + 1 });
         } else {
           this.setState({ message: this.state.message + "You can't go down" });
@@ -140,7 +144,7 @@ export default class AppClass extends React.Component {
       }
       case "left": {
         if (newIndex != this.index) {
-          this.setState({ index: this.state.newIndex });
+          this.setState({ index: newIndex });
           this.setState({ steps: this.state.steps + 1 });
         } else {
           this.setState({ message: this.state.message + "You can't go left" });
@@ -149,7 +153,7 @@ export default class AppClass extends React.Component {
       }
       case "right": {
         if (newIndex != this.index) {
-          this.setState({ index: this.state.newIndex });
+          this.setState({ index: newIndex });
           this.setState({ steps: this.state.steps + 1 });
         } else {
           this.setState({ message: this.state.message + "You can't go right" });
