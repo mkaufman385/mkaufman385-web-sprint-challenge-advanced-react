@@ -116,11 +116,11 @@ export default class AppClass extends React.Component {
   };
 
   move = (direction) => {
-    const newIndex = getNextIndex(direction);
+    const newIndex = this.getNextIndex(direction);
 
     switch (direction) {
       case "up": {
-        if (newIndex != this.state.index) {
+        if (newIndex != this.index) {
           this.setState({ index: this.state.newIndex });
           this.setState({ steps: this.state.steps + 1 });
         } else {
@@ -130,29 +130,29 @@ export default class AppClass extends React.Component {
         break;
       }
       case "down": {
-        if (newIndex != index) {
-          setIndex(newIndex);
-          setSteps(steps + 1);
+        if (newIndex != this.index) {
+          this.setState({ index: this.state.newIndex });
+          this.setState({ steps: this.state.steps + 1 });
         } else {
-          setMessage("You can't go down");
+          this.setState({ message: this.state.message + "You can't go down" });
         }
         break;
       }
       case "left": {
-        if (newIndex != index) {
-          setIndex(newIndex);
-          setSteps(steps + 1);
+        if (newIndex != this.index) {
+          this.setState({ index: this.state.newIndex });
+          this.setState({ steps: this.state.steps + 1 });
         } else {
-          setMessage("You can't go left");
+          this.setState({ message: this.state.message + "You can't go left" });
         }
         break;
       }
       case "right": {
-        if (newIndex != index) {
-          setIndex(newIndex);
-          setSteps(steps + 1);
+        if (newIndex != this.index) {
+          this.setState({ index: this.state.newIndex });
+          this.setState({ steps: this.state.steps + 1 });
         } else {
-          setMessage("You can't go right");
+          this.setState({ message: this.state.message + "You can't go right" });
         }
         break;
       }
@@ -229,7 +229,7 @@ export default class AppClass extends React.Component {
           ))}
         </div>
         <div className="info">
-          <h3 id="message"></h3>
+          <h3 id="message" {...this.state.message}></h3>
         </div>
         <div id="keypad">
           <button id="left" onClick={() => this.move("left")}>
@@ -238,8 +238,12 @@ export default class AppClass extends React.Component {
           <button id="up" onClick={() => this.move("up")}>
             UP
           </button>
-          <button id="right">RIGHT</button>
-          <button id="down">DOWN</button>
+          <button id="right" onClick={() => this.move("right")}>
+            RIGHT
+          </button>
+          <button id="down" onClick={() => this.move("down")}>
+            DOWN
+          </button>
           <button id="reset" onClick={this.reset}>
             reset
           </button>
