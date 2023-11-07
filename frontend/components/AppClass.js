@@ -61,18 +61,18 @@ export default class AppClass extends React.Component {
   // };
 
   reset = () => {
-    // this.setState({ index: this.state.initialIndex });
-    // // setIndex(initialIndex);
-    // this.setState({ steps: this.state.initialSteps });
-    // // setSteps(initialSteps);
-    // this.setState({ message: this.state.initialMessage });
-    // // setMessage(initialMessage);
-    // this.setState({ email: this.state.initialEmail });
-    // // setEmail(initialEmail);
-    // console.log(
-    //   "reset back to index 4, steps 0, message empty, and email input empty"
-    // );
-    // // Use this helper to reset all states to their initial values.
+    this.setState({ index: 4 });
+    // setIndex(initialIndex);
+    this.setState({ steps: 0 });
+    // setSteps(initialSteps);
+    this.setState({ message: "" });
+    // setMessage(initialMessage);
+    this.setState({ email: "" });
+    // setEmail(initialEmail);
+    console.log(
+      "reset back to index 4, steps 0, message empty, and email input empty"
+    );
+    // Use this helper to reset all states to their initial values.
   };
 
   getNextIndex = (direction) => {
@@ -248,7 +248,7 @@ export default class AppClass extends React.Component {
           <button id="down" onClick={() => this.move("down")}>
             DOWN
           </button>
-          <button id="reset" onClick={this.reset}>
+          <button id="reset" onClick={() => this.reset()}>
             reset
           </button>
         </div>
