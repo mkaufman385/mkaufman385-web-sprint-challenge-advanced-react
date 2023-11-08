@@ -1,4 +1,5 @@
-import React, { useState, setState } from "react";
+import axios from "axios";
+import React, { setState, Component } from "react";
 
 // Suggested initial states
 const initialMessage = "";
@@ -21,34 +22,37 @@ export default class AppClass extends React.Component {
   // You can delete them and build your own logic from scratch.
 
   getXY = () => {
+    const { index } = this.state;
     const xCoord = () => {
-      if (this.state.index % 3 === 0) {
+      if (index % 3 === 0) {
         return 1;
       }
-      if ((this.state.index % 3) - 1 === 0) {
+      if ((index % 3) - 1 === 0) {
         return 2;
       }
-      if ((this.state.index % 3) - 2 === 0) {
+      if ((index % 3) - 2 === 0) {
         return 3;
       }
     };
 
     const yCoord = () => {
-      if (this.state.index >= 0 && this.state.index <= 2) {
+      if (index >= 0 && index <= 2) {
         return 1;
       }
-      if (this.state.index >= 3 && this.state.index <= 5) {
+      if (index >= 3 && index <= 5) {
         return 2;
       }
-      if (this.state.index >= 6 && this.state.index <= 8) {
+      if (index >= 6 && index <= 8) {
         return 3;
       }
     };
     return `(${xCoord()}, ${yCoord()})`;
     // It it not necessary to have a state to track the coordinates.
     // It's enough to know what index the "B" is at, to be able to calculate them.
+    // console.log(getXY());
   };
-  // console.log(this.getXY())
+  // getXY();
+  // console.log(getXY())
 
   // getXY()
   // It it not necessary to have a state to track the coordinates.
@@ -76,40 +80,43 @@ export default class AppClass extends React.Component {
   };
 
   getNextIndex = (direction) => {
+    const { index } = this.state;
+
     switch (direction) {
       case "up": {
-        if (this.state.index <= 8 && this.state.index >= 3) {
-          return this.setState({ index: this.state.index - 3 });
+        if (index <= 8 && index >= 3) {
+          return index - 3;
         } else {
-          return this.state.index;
+          return index;
         }
         break;
       }
       case "down": {
-        if (this.state.index <= 5 && this.state.index >= 0) {
-          return this.setState({ index: this.state.index + 3 });
+        if (index <= 5 && index >= 0) {
+          return index + 3;
         } else {
-          return this.state.index;
+          return index;
         }
         break;
       }
+
       case "left": {
-        if ((this.state.index % 3) - 1 === 0) {
-          return this.setState({ index: this.state.index - 1 });
-        } else if ((this.state.index % 3) - 2 === 0) {
-          return this.setState({ index: this.state.index - 1 });
+        if ((index % 3) - 1 === 0) {
+          return index - 1;
+        } else if ((index % 3) - 2 === 0) {
+          return index - 1;
         } else {
-          return this.state.index;
+          return index;
         }
         break;
       }
       case "right": {
-        if (this.state.index % 3 === 0) {
-          return this.setState({ index: this.state.index + 1 });
-        } else if ((this.state.index % 3) - 1 === 0) {
-          return this.setState({ index: this.state.index + 1 });
+        if (index % 3 === 0) {
+          return index + 1;
+        } else if ((index % 3) - 1 === 0) {
+          return index + 1;
         } else {
-          return this.state.index;
+          return index;
         }
         break;
       }
@@ -121,42 +128,50 @@ export default class AppClass extends React.Component {
 
   move = (direction) => {
     const newIndex = this.getNextIndex(direction);
+    const { index } = this.state;
+    const { steps } = this.state;
+    const { message } = this.state;
+
+    const upMessage = "You can't go up";
+    const downMessage = "You can't go down";
+    const leftMessage = "You can't go left";
+    const rightMessage = "You can't go right";
 
     switch (direction) {
       case "up": {
-        if (newIndex != this.index) {
+        if (newIndex != index) {
           this.setState({ index: newIndex });
-          this.setState({ steps: this.state.steps + 1 });
+          this.setState({ steps: steps + 1 });
         } else {
-          this.setState({ message: this.state.message + "You can't go up" });
+          this.setState({ message: upMessage });
         }
 
         break;
       }
       case "down": {
-        if (newIndex != this.index) {
+        if (newIndex != index) {
           this.setState({ index: newIndex });
-          this.setState({ steps: this.state.steps + 1 });
+          this.setState({ steps: steps + 1 });
         } else {
-          this.setState({ message: this.state.message + "You can't go down" });
+          this.setState({ message: downMessage });
         }
         break;
       }
       case "left": {
-        if (newIndex != this.index) {
+        if (newIndex != index) {
           this.setState({ index: newIndex });
-          this.setState({ steps: this.state.steps + 1 });
+          this.setState({ steps: steps + 1 });
         } else {
-          this.setState({ message: this.state.message + "You can't go left" });
+          this.setState({ message: leftMessage });
         }
         break;
       }
       case "right": {
-        if (newIndex != this.index) {
+        if (newIndex != index) {
           this.setState({ index: newIndex });
-          this.setState({ steps: this.state.steps + 1 });
+          this.setState({ steps: steps + 1 });
         } else {
-          this.setState({ message: this.state.message + "You can't go right" });
+          this.setState({ message: rightMessage });
         }
         break;
       }
@@ -206,34 +221,69 @@ export default class AppClass extends React.Component {
   };
 
   onChange = (evt) => {
+    const { email } = this.state;
+
+    this.setState({ email: evt.target.value });
+    console.log(email);
     // You will need this to update the value of the input.
   };
 
   onSubmit = (evt) => {
     // Use a POST request to send a payload to the server.
+    const { message } = this.state;
+    evt.preventDefault();
+
+    function convertCoordinatesFromStringToNumbers(coordinatesString) {
+      const [xString, yString] = coordinatesString.slice(1, -1).split(",");
+
+      const x = parseFloat(xString);
+      const y = parseFloat(yString);
+
+      return { x, y };
+    }
+
+    const coordinatesString = this.getXY();
+    const coordinates =
+      convertCoordinatesFromStringToNumbers(coordinatesString);
+    console.log(coordinates.x);
+    console.log(coordinates.y);
+
+    axios
+      .post("http://localhost:9000/api/result", {
+        x: coordinates.x,
+        y: coordinates.y,
+        steps: steps,
+        email: email,
+      })
+      .then((response) =>
+        this.setState({ message: response.data.message }).catch((error) =>
+          this.setState({ message: error.response.data.message })
+        )
+      );
   };
 
   render() {
     const { className } = this.props;
+    const { message, email, index, steps } = this.state;
     return (
       <div id="wrapper" className={className}>
         <div className="info">
           <h3 id="coordinates">Coordinates {this.getXY()}</h3>
-          <h3 id="coordinates">Index {this.state.index}</h3>
-          <h3 id="steps">You moved {this.state.steps} times</h3>
+          <h3 id="coordinates">Index {index}</h3>
+          <h3 id="steps">You moved {steps} times</h3>
         </div>
         <div id="grid">
           {[0, 1, 2, 3, 4, 5, 6, 7, 8].map((idx) => (
             <div
               key={idx}
-              className={`square${idx === this.state.index ? " active" : ""}`}
+              className={`square${idx === index ? " active" : ""}`}
             >
-              {idx === this.state.index ? "B" : null}
+              {idx === index ? "B" : null}
             </div>
           ))}
         </div>
         <div className="info">
-          <h3 id="message" {...this.state.message}></h3>
+          <h3 id="message">{message}</h3>
         </div>
         <div id="keypad">
           <button id="left" onClick={() => this.move("left")}>
@@ -252,8 +302,14 @@ export default class AppClass extends React.Component {
             reset
           </button>
         </div>
-        <form>
-          <input id="email" type="email" placeholder="type email"></input>
+        <form onSubmit={this.onSubmit}>
+          <input
+            onChange={this.onChange}
+            id="email"
+            value={email}
+            type="email"
+            placeholder="type email"
+          ></input>
           <input id="submit" type="submit"></input>
         </form>
       </div>
