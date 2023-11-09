@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { setState, Component } from "react";
+import React from "react";
 
 // Suggested initial states
 const initialMessage = "";
@@ -221,18 +221,19 @@ export default class AppClass extends React.Component {
   };
 
   onChange = (evt) => {
-    const { email } = this.state;
+    // const { email } = this.state;
 
     this.setState({ email: evt.target.value });
-    console.log(email);
+    // console.log(email);
+    console.log(evt.target.value);
     // You will need this to update the value of the input.
   };
 
   onSubmit = (evt) => {
     // Use a POST request to send a payload to the server.
-    const { message } = this.state;
     evt.preventDefault();
-
+    const { email, index, steps } = this.state;
+    // console.log("email", this.email);
     function convertCoordinatesFromStringToNumbers(coordinatesString) {
       const [xString, yString] = coordinatesString.slice(1, -1).split(",");
 
@@ -248,17 +249,20 @@ export default class AppClass extends React.Component {
     console.log(coordinates.x);
     console.log(coordinates.y);
 
+    console.log(steps, email);
+    const payload = {
+      x: coordinates.x,
+      y: coordinates.y,
+      steps: steps,
+      email: email,
+    };
     axios
-      .post("http://localhost:9000/api/result", {
-        x: coordinates.x,
-        y: coordinates.y,
-        steps: steps,
-        email: email,
-      })
+      .post("http://localhost:9000/api/result", payload)
       .then((response) =>
-        this.setState({ message: response.data.message }).catch((error) =>
-          this.setState({ message: error.response.data.message })
-        )
+        this.setState({ message: response.data.message, email: "" })
+      )
+      .catch((error) =>
+        this.setState({ message: error.response.data.message })
       );
   };
 
@@ -270,7 +274,9 @@ export default class AppClass extends React.Component {
         <div className="info">
           <h3 id="coordinates">Coordinates {this.getXY()}</h3>
           <h3 id="coordinates">Index {index}</h3>
-          <h3 id="steps">You moved {steps} times</h3>
+          <h3 id="steps">
+            You moved {steps === 1 ? `${steps} time` : `${steps} times`}
+          </h3>
         </div>
         <div id="grid">
           {[0, 1, 2, 3, 4, 5, 6, 7, 8].map((idx) => (

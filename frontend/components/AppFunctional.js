@@ -188,7 +188,7 @@ export default function AppFunctional(props) {
         steps: steps,
         email: email,
       })
-      .then((response) => setMessage(response.data.message))
+      .then((response) => setMessage(response.data.message), setEmail(""))
       .catch((error) => {
         setMessage(error.response.data.message);
       });
@@ -248,7 +248,9 @@ export default function AppFunctional(props) {
       <div className="info">
         <h3 id="coordinates">Coordinates {getXY()}</h3>
         <h3 id="coordinates">Index {index}</h3>
-        <h3 id="steps">You moved {steps} times</h3>
+        <h3 id="steps">
+          You moved {steps === 1 ? `${steps} time` : `${steps} times`}
+        </h3>
       </div>
       <div id="grid">
         {[0, 1, 2, 3, 4, 5, 6, 7, 8].map((idx) => (
